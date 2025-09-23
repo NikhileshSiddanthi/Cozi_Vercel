@@ -4,6 +4,37 @@
 
 **URL**: https://lovable.dev/projects/1474b378-2ab9-4696-ac83-91d13cd26c64
 
+## Environment Setup
+
+This project requires Supabase environment variables to function. Before running the project:
+
+### Local Development
+
+1. Copy the environment template:
+```sh
+cp .env.example .env
+```
+
+2. Get your Supabase credentials from [your Supabase dashboard](https://supabase.com/dashboard)
+
+3. Update `.env` with your actual values:
+```env
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
+```
+
+### Deployment (Vercel)
+
+1. In your Vercel dashboard, navigate to your project
+2. Go to Settings → Environment Variables
+3. Add the following variables:
+   - `VITE_SUPABASE_URL` = your Supabase project URL
+   - `VITE_SUPABASE_ANON_KEY` = your Supabase anon key
+
+### Other Platforms
+
+For other deployment platforms, ensure you set the same environment variables in their respective configuration systems.
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
@@ -71,3 +102,7 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Security Note
+
+This project uses environment variables for sensitive configuration. Never commit real API keys or secrets to the repository. Always use the `.env.example` template and configure actual values through environment variables.

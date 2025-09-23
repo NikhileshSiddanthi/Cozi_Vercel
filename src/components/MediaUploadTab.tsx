@@ -124,29 +124,21 @@ export const MediaUploadTab: React.FC<MediaUploadTabProps> = ({
       ));
 
       // Now register with draft via edge function
-      const response = await fetch(`https://zsquagqhilzjumfjxusk.supabase.co/functions/v1/media-upload/complete`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzcXVhZ3FoaWx6anVtZmp4dXNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxMjA5MDMsImV4cCI6MjA2OTY5NjkwM30.HF6dfD8LhicG73SMomqcZO-8DD5GN9YPX8W6sh4DcFI',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const { data: mediaData, error: mediaError } = await supabase.functions.invoke('media-upload/complete', {
+        body: {
           draftId,
           fileId: `${userId}/${fileName}`,
           url: publicUrlData.publicUrl,
           mimeType: mediaFile.file.type,
           fileSize: mediaFile.file.size
-        })
+        }
       });
 
-      if (!response.ok) {
+      if (mediaError) {
         // Clean up storage file if draft attachment fails
         await supabase.storage.from('post-files').remove([`${userId}/${fileName}`]);
-        throw new Error(`Failed to register media: ${response.statusText}`);
+        throw new Error(mediaError.message || 'Failed to register media');
       }
-
-      const mediaResult = await response.json();
 
       // Update completed state
       setMediaFiles(prev => prev.map(f => 
