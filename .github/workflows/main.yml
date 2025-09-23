@@ -1,0 +1,27 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC; adjust as needed (see cron syntax)
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetches full history for merging
+
+      - name: Add upstream remote
+        run: git remote add upstream https:https://github.com/NikhileshSiddanthi/cozy-circle-conversations  # Replace with Repo A's URL
+
+      - name: Fetch upstream
+        run: git fetch upstream
+
+      - name: Merge upstream
+        run: |
+          git checkout main  # Replace with your default branch if different
+          git merge upstream/main --allow-unrelated-histories
+          git push origin main
