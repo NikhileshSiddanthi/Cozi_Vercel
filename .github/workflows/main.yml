@@ -2,7 +2,7 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC; adjust as needed (see cron syntax)
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC; adjust as needed
   workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
@@ -13,6 +13,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Fetches full history for merging
+
+      - name: Set git identity  # New step to avoid the identity error
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
 
       - name: Add upstream remote
         run: git remote add upstream https://github.com/NikhileshSiddanthi/cozy-circle-conversations  # Replace with Repo A's URL
