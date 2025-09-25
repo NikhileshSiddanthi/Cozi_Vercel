@@ -9,36 +9,36 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Political theme colors - Blues, Reds, Whites */
-    --background: 220 15% 97%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 255 255 255;
+    --foreground: 15 23 42;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
 
-    /* Primary: Political Blue */
-    --primary: 215 84% 45%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary: Strong Political Blue */
+    --primary: 37 99 235;
+    --primary-foreground: 255 255 255;
 
-    /* Secondary: Political Red */
-    --secondary: 355 85% 55%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary: Accent Gray */
+    --secondary: 241 245 249;
+    --secondary-foreground: 15 23 42;
 
-    --muted: 220 13% 93%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
 
-    /* Accent: Patriotic Red */
-    --accent: 355 85% 55%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent: Strong Blue */
+    --accent: 59 130 246;
+    --accent-foreground: 255 255 255;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
 
-    --border: 220 13% 88%;
-    --input: 220 13% 91%;
-    --ring: 215 84% 45%;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 37 99 235;
 
     --radius: 0.5rem;
 
@@ -64,9 +64,9 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
     
     /* Modern design enhancements */
-    --primary-rgb: 59, 130, 246;
-    --secondary-rgb: 239, 68, 68;
-    --accent-rgb: 239, 68, 68;
+    --primary-rgb: 37, 99, 235;
+    --secondary-rgb: 100, 116, 139;
+    --accent-rgb: 59, 130, 246;
     --success-rgb: 34, 197, 94;
     --warning-rgb: 251, 191, 36;
     --error-rgb: 239, 68, 68;
@@ -85,36 +85,36 @@ All colors MUST be HSL.
 
   .dark {
     /* Dark mode political theme */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 15 23 42;
+    --foreground: 248 250 252;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 30 41 59;
+    --card-foreground: 248 250 252;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
 
-    /* Primary: Lighter Political Blue for dark mode */
-    --primary: 215 70% 60%;
-    --primary-foreground: 222.2 84% 4.9%;
+    /* Primary: Bright Blue for dark mode */
+    --primary: 59 130 246;
+    --primary-foreground: 15 23 42;
 
-    /* Secondary: Lighter Political Red for dark mode */
-    --secondary: 355 70% 65%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    /* Secondary: Dark Gray */
+    --secondary: 51 65 85;
+    --secondary-foreground: 248 250 252;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
 
-    /* Accent: Political Red for dark mode */
-    --accent: 355 70% 65%;
-    --accent-foreground: 222.2 84% 4.9%;
+    /* Accent: Bright Blue */
+    --accent: 96 165 250;
+    --accent-foreground: 15 23 42;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 59 130 246;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -266,5 +266,18 @@ All colors MUST be HSL.
   /* Smooth transitions */
   .transition-smooth {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Navigation and Button improvements */
+  .nav-button-active {
+    @apply bg-blue-600 text-white shadow-md hover:bg-blue-700;
+  }
+  
+  .nav-button-inactive {
+    @apply text-slate-600 hover:bg-blue-50 hover:text-blue-600;
+  }
+  
+  .header-background {
+    @apply bg-white/95 backdrop-blur-xl border-slate-200;
   }
 }

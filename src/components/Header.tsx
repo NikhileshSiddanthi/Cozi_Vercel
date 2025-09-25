@@ -116,14 +116,14 @@ export const Header = () => {
         Skip to content
       </a>
       
-      <header className="fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-xl border-b border-border/50 z-50 shadow-soft" role="navigation" aria-label="Main navigation">
+      <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-xl border-b border-slate-200 z-50 shadow-sm" role="navigation" aria-label="Main navigation">
         <div className="flex items-center justify-between h-full px-3 md:px-6">
           {/* Left: Logo */}
           <div className="flex items-center gap-2 md:gap-3">
             <Button
               variant="ghost"
               onClick={() => navigate('/')}
-              className="font-bold text-lg md:text-xl text-gradient hover:bg-primary/10 px-2 md:px-3 transition-all duration-300 hover:scale-105"
+              className="font-bold text-lg md:text-xl text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-2 md:px-3 transition-all duration-300 hover:scale-105"
               aria-label="COZI Home"
             >
               COZI
@@ -140,8 +140,8 @@ export const Header = () => {
                 onClick={() => navigate(item.path)}
                 className={`gap-2 transition-all duration-300 rounded-xl ${
                   isActive(item.path) 
-                    ? 'bg-gradient-primary text-white shadow-md hover:shadow-lg' 
-                    : 'hover:bg-primary/10 hover:text-primary'
+                    ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700 hover:shadow-lg' 
+                    : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600'
                 }`}
                 aria-current={isActive(item.path) ? 'page' : undefined}
               >
@@ -156,7 +156,7 @@ export const Header = () => {
             {/* Primary CTA - Desktop */}
             <Button
               onClick={handleCreateClick}
-              className="hidden md:flex gap-2 bg-gradient-primary hover:shadow-glow text-white font-medium transition-all duration-300 hover:scale-105 rounded-xl px-6"
+              className="hidden md:flex gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-lg text-white font-medium transition-all duration-300 hover:scale-105 rounded-xl px-6"
               aria-label="Create new post"
             >
               <Plus className="h-4 w-4" />
@@ -250,7 +250,7 @@ export const Header = () => {
       {/* Mobile Floating Action Button */}
       <Button
         onClick={handleCreateClick}
-        className="md:hidden fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-hard bg-gradient-primary hover:shadow-glow text-white z-40 transition-all duration-300 hover:scale-110 animate-float"
+        className="md:hidden fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 hover:shadow-xl text-white z-40 transition-all duration-300 hover:scale-110"
         size="icon"
         aria-label="Create post"
       >
