@@ -1,0 +1,8 @@
+            - name: PullWise Review
+  # You may pin to the exact commit or the version.
+  # uses: matuszewskijan/pullwise-action@28815f659c1f7588ece9d3894d92ef6583eef2a8
+  uses: matuszewskijan/pullwise-action@v1
+  with:
+    # PullWise API Key
+    pullwise-api-key: 
+          
