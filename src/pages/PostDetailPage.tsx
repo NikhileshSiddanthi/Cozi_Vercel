@@ -4,7 +4,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { FloatingNavbar } from '@/components/FloatingNavbar';
 import { RelatedNewsSidebar } from '@/components/RelatedNewsSidebar';
 import { PostCard } from '@/components/PostCard';
 import { ArrowLeft } from 'lucide-react';

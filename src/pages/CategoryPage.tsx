@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { SuggestGroupModal } from '@/components/SuggestGroupModal';
-import { FloatingNavbar } from '@/components/FloatingNavbar';
 import { 
   ArrowLeft,
   Users, 
@@ -141,8 +140,6 @@ const CategoryPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <FloatingNavbar />
-      
       <div className="container mx-auto px-4 py-20">
         {/* Back Button */}
         <Button 

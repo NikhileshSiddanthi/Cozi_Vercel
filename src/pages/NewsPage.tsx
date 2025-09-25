@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FloatingNavbar } from '@/components/FloatingNavbar';
 import { Clock, ExternalLink, Search, TrendingUp, Calendar } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 

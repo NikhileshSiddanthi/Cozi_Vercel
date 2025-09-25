@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { FloatingNavbar } from '@/components/FloatingNavbar';
 import { useTrendingTopics } from '@/hooks/useTrendingTopics';
 import { 
   TrendingUp, 
