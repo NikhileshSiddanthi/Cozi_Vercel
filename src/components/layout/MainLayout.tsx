@@ -1,6 +1,5 @@
 import React from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { Header } from './Header';
 import { LeftSidebar } from './LeftSidebar';
 import { RightSidebar } from './RightSidebar';
 

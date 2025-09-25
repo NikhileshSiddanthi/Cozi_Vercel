@@ -132,8 +132,8 @@ const Dashboard = () => {
     <MainLayout>
       {/* Welcome Section */}
       <div className="mb-8 md:mb-12 text-center relative overflow-hidden">
-        <div className="absolute inset-0 gradient-mesh opacity-20 blur-3xl"></div>
-        <div className="relative z-10 space-y-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/20 rounded-3xl"></div>
+        <div className="relative z-10 space-y-4 py-8">
           <h1 className="text-3xl md:text-5xl font-bold mb-4 text-gradient animate-slide-up">
             Welcome to COZI
           </h1>
