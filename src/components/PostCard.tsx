@@ -469,17 +469,17 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full modern-card-hover group overflow-hidden">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarFallback>
+            <Avatar className="ring-2 ring-primary/20 transition-all duration-300 hover:ring-primary/40">
+              <AvatarFallback className="bg-gradient-primary text-white font-semibold">
                 {post.profiles?.display_name?.[0] || "U"}
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-medium">
+              <p className="font-medium transition-colors hover:text-primary">
                 {post.profiles?.display_name || "User"}
               </p>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -493,21 +493,21 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
             </div>
           </div>
           {post.is_pinned && (
-            <div className="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-medium">
+            <div className="bg-gradient-primary text-white px-3 py-1 rounded-full text-xs font-medium shadow-md animate-float">
               Pinned
             </div>
           )}
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div className="group">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-2">
+              <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors duration-300">
                 {post.title}
                 {post.is_edited && (
-                  <span className="ml-2 text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
+                  <span className="ml-2 text-xs text-muted-foreground bg-muted/50 backdrop-blur-sm px-2 py-1 rounded-full border">
                     Edited
                   </span>
                 )}
@@ -515,7 +515,7 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
               {post.content && (
                 <ClickableContent 
                   content={post.content}
-                  className="text-muted-foreground whitespace-pre-wrap"
+                  className="text-muted-foreground whitespace-pre-wrap leading-relaxed"
                 />
               )}
             </div>
@@ -527,7 +527,7 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
                   console.log('Edit button clicked for post:', post.id);
                   setShowEditModal(true);
                 }}
-                className="opacity-0 group-hover:opacity-100 transition-opacity ml-2"
+                className="opacity-0 group-hover:opacity-100 transition-all duration-300 ml-2 hover:bg-primary/10 hover:text-primary"
               >
                 <Edit3 className="h-4 w-4" />
               </Button>
@@ -541,12 +541,12 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
         {/* View Counter */}
         <ViewCounter postId={post.id} />
 
-        <div className="flex items-center justify-between pt-2 border-t">
-          <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center justify-between pt-4 border-t border-border/50">
+          <div className="flex items-center gap-3 flex-wrap">
             <ReactionPicker
               userReaction={userReaction}
               reactionCounts={reactionCounts}
-              totalCount={Object.values(reactionCounts).reduce((sum, count) => sum + count, 0)}
+              totalCount={Object.values(reactionCounts).reduce((sum: number, count: number) => sum + count, 0)}
               onReaction={handleReaction}
               onRemoveReaction={handleRemoveReaction}
             />
@@ -555,8 +555,9 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
               variant="ghost"
               size="sm"
               onClick={() => setShowComments(!showComments)}
+              className="hover:bg-primary/10 hover:text-primary transition-all duration-300 rounded-xl"
             >
-              <MessageCircle className="h-4 w-4 mr-1" />
+              <MessageCircle className="h-4 w-4 mr-2" />
               {post.comment_count}
             </Button>
 
@@ -564,15 +565,20 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
               variant="ghost"
               size="sm"
               onClick={() => navigate(`/post/${post.id}`)}
-              className="text-primary hover:text-primary/80"
+              className="text-primary hover:text-primary/80 hover:bg-primary/10 transition-all duration-300 rounded-xl"
             >
-              <Eye className="h-4 w-4 mr-1" />
+              <Eye className="h-4 w-4 mr-2" />
               View Details
             </Button>
           </div>
 
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" onClick={handleShare}>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleShare}
+              className="hover:bg-primary/10 hover:text-primary transition-all duration-300 rounded-xl"
+            >
               <Share2 className="h-4 w-4" />
             </Button>
             <PostActionsMenu

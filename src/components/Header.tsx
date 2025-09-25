@@ -116,14 +116,14 @@ export const Header = () => {
         Skip to content
       </a>
       
-      <header className="fixed top-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-md border-b border-border z-50" role="navigation" aria-label="Main navigation">
+      <header className="fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-xl border-b border-border/50 z-50 shadow-soft" role="navigation" aria-label="Main navigation">
         <div className="flex items-center justify-between h-full px-3 md:px-6">
           {/* Left: Logo */}
           <div className="flex items-center gap-2 md:gap-3">
             <Button
               variant="ghost"
               onClick={() => navigate('/')}
-              className="font-bold text-lg md:text-xl text-primary hover:bg-primary/10 px-2 md:px-3"
+              className="font-bold text-lg md:text-xl text-gradient hover:bg-primary/10 px-2 md:px-3 transition-all duration-300 hover:scale-105"
               aria-label="COZI Home"
             >
               COZI
@@ -131,14 +131,18 @@ export const Header = () => {
           </div>
 
           {/* Center: Navigation Tabs (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-2" aria-label="Main navigation">
             {navItems.map((item) => (
               <Button
                 key={item.key}
                 variant={isActive(item.path) ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => navigate(item.path)}
-                className="gap-2"
+                className={`gap-2 transition-all duration-300 rounded-xl ${
+                  isActive(item.path) 
+                    ? 'bg-gradient-primary text-white shadow-md hover:shadow-lg' 
+                    : 'hover:bg-primary/10 hover:text-primary'
+                }`}
                 aria-current={isActive(item.path) ? 'page' : undefined}
               >
                 <item.icon className="h-4 w-4" />
@@ -152,7 +156,7 @@ export const Header = () => {
             {/* Primary CTA - Desktop */}
             <Button
               onClick={handleCreateClick}
-              className="hidden md:flex gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
+              className="hidden md:flex gap-2 bg-gradient-primary hover:shadow-glow text-white font-medium transition-all duration-300 hover:scale-105 rounded-xl px-6"
               aria-label="Create new post"
             >
               <Plus className="h-4 w-4" />
@@ -246,11 +250,11 @@ export const Header = () => {
       {/* Mobile Floating Action Button */}
       <Button
         onClick={handleCreateClick}
-        className="md:hidden fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground z-40"
+        className="md:hidden fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-hard bg-gradient-primary hover:shadow-glow text-white z-40 transition-all duration-300 hover:scale-110 animate-float"
         size="icon"
         aria-label="Create post"
       >
-        <Plus className="h-6 w-6" />
+        <Plus className="h-7 w-7" />
       </Button>
 
       {/* Create Post Dialog */}

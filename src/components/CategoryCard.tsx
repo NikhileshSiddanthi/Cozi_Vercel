@@ -61,35 +61,42 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick })
   
   return (
     <Card 
-      className="group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border-border/50 bg-card rounded-xl overflow-hidden h-auto min-h-[200px]"
+      className="group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border-border/50 bg-card/80 backdrop-blur-sm rounded-2xl overflow-hidden h-auto min-h-[220px] modern-card-hover relative"
       onClick={onClick}
     >
-      <CardHeader className="pb-4 pt-6">
+      {/* Background gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      
+      <CardHeader className="pb-4 pt-6 relative z-10">
         {/* Icon Badge */}
-        <div className="flex items-start justify-between mb-3">
-          <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${accentColor} transition-transform group-hover:scale-110`}>
-            <Icon className="h-6 w-6" />
+        <div className="flex items-start justify-between mb-4">
+          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${accentColor} transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg`}>
+            <Icon className="h-7 w-7" />
           </div>
           {/* Group Count Badge */}
           <Badge 
             variant="outline" 
-            className="text-xs px-2 py-1 bg-muted/50 text-muted-foreground border-muted-foreground/20 hover:bg-muted/70 transition-colors"
+            className="text-xs px-3 py-1.5 bg-muted/50 backdrop-blur-sm text-muted-foreground border-muted-foreground/20 hover:bg-muted/70 transition-all duration-300 rounded-full group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/30"
           >
+            <Users className="h-3 w-3 mr-1" />
             {category.group_count || 0} groups
           </Badge>
         </div>
         
         {/* Title */}
-        <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-200 mb-2">
+        <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300 mb-3">
           {category.name}
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 relative z-10">
         {/* Description */}
-        <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+        <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
           {category.description}
         </p>
+        
+        {/* Interactive bottom border */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-primary transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
       </CardContent>
     </Card>
   );
