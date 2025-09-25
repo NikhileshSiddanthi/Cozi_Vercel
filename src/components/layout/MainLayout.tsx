@@ -22,9 +22,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   return (
     <SidebarProvider defaultOpen>
       <div className="min-h-screen flex w-full bg-background">
-        <Header />
-        
-        <div className="flex w-full pt-16">
+        <div className="flex w-full">
           {/* Left Sidebar */}
           <LeftSidebar />
           
