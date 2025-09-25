@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import {
-  Heart,
   MessageCircle,
   Share2,
   Calendar,
@@ -17,6 +16,7 @@ import {
   Eye,
   Edit3
 } from "lucide-react";
+import { ReactionPicker, ReactionType, REACTIONS } from "./ReactionPicker";
 import { TimestampDisplay } from '@/components/TimestampDisplay';
 import { LinkPreviewCard } from '@/components/LinkPreviewCard';
 import { CommentSection } from "./CommentSection";
@@ -72,7 +72,14 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const { role: userRole } = useUserRole();
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [userReaction, setUserReaction] = useState<ReactionType | null>(null);
+  const [reactionCounts, setReactionCounts] = useState<Record<ReactionType, number>>({
+    spark: 0,
+    fire: 0,
+    clap: 0,
+    laugh: 0,
+    bloom: 0,
+  });
   const [pollVote, setPollVote] = useState<number | null>(null);
   const [pollResults, setPollResults] = useState<number[]>([]);
   const [showComments, setShowComments] = useState(false);
@@ -85,6 +92,7 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
   useEffect(() => {
     if (user) {
       fetchUserReaction();
+      fetchReactionCounts();
       if (post.poll_question) {
         fetchPollData();
       }
@@ -99,10 +107,33 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
       .select("reaction_type")
       .eq("post_id", post.id)
       .eq("user_id", user.id)
-      .eq("reaction_type", "like")
       .maybeSingle();
 
-    setIsLiked(!!data);
+    setUserReaction(data?.reaction_type as ReactionType || null);
+  };
+
+  const fetchReactionCounts = async () => {
+    const { data } = await supabase
+      .from("reactions")
+      .select("reaction_type")
+      .eq("post_id", post.id);
+
+    const counts: Record<ReactionType, number> = {
+      spark: 0,
+      fire: 0,
+      clap: 0,
+      laugh: 0,
+      bloom: 0,
+    };
+
+    data?.forEach((reaction) => {
+      const type = reaction.reaction_type as ReactionType;
+      if (counts[type] !== undefined) {
+        counts[type]++;
+      }
+    });
+
+    setReactionCounts(counts);
   };
 
   const fetchPollData = async () => {
@@ -135,41 +166,55 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
     }
   };
 
-  const toggleLike = async () => {
+  const handleReaction = async (type: ReactionType) => {
     if (!user) return;
 
     try {
-      if (isLiked) {
-        await supabase
-          .from("reactions")
-          .delete()
-          .eq("post_id", post.id)
-          .eq("user_id", user.id)
-          .eq("reaction_type", "like");
-        setIsLiked(false);
-      } else {
-        // Clean up any legacy reactions for this user/post then insert like
-        await supabase
-          .from("reactions")
-          .delete()
-          .eq("post_id", post.id)
-          .eq("user_id", user.id);
+      // Remove any existing reaction from this user
+      await supabase
+        .from("reactions")
+        .delete()
+        .eq("post_id", post.id)
+        .eq("user_id", user.id);
 
-        await supabase
-          .from("reactions")
-          .insert({
-            post_id: post.id,
-            user_id: user.id,
-            reaction_type: "like",
-          });
-        setIsLiked(true);
-      }
+      // Add new reaction
+      await supabase
+        .from("reactions")
+        .insert({
+          post_id: post.id,
+          user_id: user.id,
+          reaction_type: type,
+        });
 
+      setUserReaction(type);
+      fetchReactionCounts();
       onUpdate?.();
     } catch (error: any) {
       toast({
         title: "Error",
         description: "Failed to update reaction",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleRemoveReaction = async () => {
+    if (!user) return;
+
+    try {
+      await supabase
+        .from("reactions")
+        .delete()
+        .eq("post_id", post.id)
+        .eq("user_id", user.id);
+
+      setUserReaction(null);
+      fetchReactionCounts();
+      onUpdate?.();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "Failed to remove reaction",
         variant: "destructive",
       });
     }
@@ -478,7 +523,10 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setShowEditModal(true)}
+                onClick={() => {
+                  console.log('Edit button clicked for post:', post.id);
+                  setShowEditModal(true);
+                }}
                 className="opacity-0 group-hover:opacity-100 transition-opacity ml-2"
               >
                 <Edit3 className="h-4 w-4" />
@@ -495,15 +543,13 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
 
         <div className="flex items-center justify-between pt-2 border-t">
           <div className="flex items-center gap-2 flex-wrap">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleLike}
-              className={isLiked ? "text-primary" : ""}
-            >
-              <Heart className="h-4 w-4 mr-1" fill={isLiked ? "currentColor" : "none"} />
-              {post.like_count}
-            </Button>
+            <ReactionPicker
+              userReaction={userReaction}
+              reactionCounts={reactionCounts}
+              totalCount={Object.values(reactionCounts).reduce((sum, count) => sum + count, 0)}
+              onReaction={handleReaction}
+              onRemoveReaction={handleRemoveReaction}
+            />
 
             <Button
               variant="ghost"
@@ -533,7 +579,10 @@ export const PostCard = ({ post, onUpdate }: PostCardProps) => {
               postId={post.id}
               postTitle={post.title}
               isAuthor={user?.id === post.user_id}
-              onEdit={() => setShowEditModal(true)}
+              onEdit={() => {
+                console.log('Edit from menu clicked for post:', post.id);
+                setShowEditModal(true);
+              }}
               onDelete={onUpdate}
             />
           </div>

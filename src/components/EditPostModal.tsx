@@ -42,6 +42,7 @@ export const EditPostModal = ({ postId, isOpen, onClose, onSuccess }: EditPostMo
   }, [isOpen, postId]);
 
   const loadPostData = async () => {
+    console.log('Loading post data for postId:', postId);
     setLoading(true);
     try {
       // Load post data

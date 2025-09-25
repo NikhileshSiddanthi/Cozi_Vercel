@@ -212,6 +212,12 @@ export const PostComposer = ({ groups, selectedGroupId, onSuccess, startExpanded
     try {
       if (editPost) {
         // Handle edit mode
+        console.log('Editing post:', editPost.id, 'with data:', {
+          title: formData.title.trim(),
+          content: formData.content.trim() || "",
+          media_urls: formData.mediaFiles
+        });
+        
         const { error } = await supabase.functions.invoke('edit-post', {
           body: {
             postId: editPost.id,
@@ -221,7 +227,12 @@ export const PostComposer = ({ groups, selectedGroupId, onSuccess, startExpanded
           }
         });
 
-        if (error) throw error;
+        if (error) {
+          console.error('Edit post error:', error);
+          throw error;
+        }
+        
+        console.log('Edit post successful');
 
         toast({
           title: "Post Updated",
