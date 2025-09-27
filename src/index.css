@@ -8,50 +8,126 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* #FFFFFF */
-    --foreground: 222 47% 11%; /* #111827 */
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 222 83% 53%; /* #2563EB */
-    --primary-foreground: 0 0% 100%; /* White */
-    --secondary: 207 92% 94%; /* #E0F2FE */
-    --secondary-foreground: 222 47% 11%; /* Text on light blue */
-    --muted: 225 16% 91%; /* #E5E7EB - using border color */
-    --muted-foreground: 220 9% 46%; /* #6B7280 */
-    --accent: 207 92% 94%; /* Using secondary for accent */
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 225 16% 91%; /* #E5E7EB */
-    --input: 225 16% 91%;
-    --ring: 222 83% 53%;
+    /* Political theme colors - Blues, Reds, Whites */
+    --background: 255 255 255;
+    --foreground: 15 23 42;
+
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
+
+    /* Primary: Strong Political Blue */
+    --primary: 37 99 235;
+    --primary-foreground: 255 255 255;
+
+    /* Secondary: Accent Gray */
+    --secondary: 241 245 249;
+    --secondary-foreground: 15 23 42;
+
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
+
+    /* Accent: Strong Blue */
+    --accent: 59 130 246;
+    --accent-foreground: 255 255 255;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 37 99 235;
+
     --radius: 0.5rem;
+
+    /* Gradients for modern design */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(215 80% 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(355 80% 65%));
+    --gradient-bg: linear-gradient(135deg, hsl(var(--background)), hsl(220 20% 98%));
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Modern design enhancements */
+    --primary-rgb: 37, 99, 235;
+    --secondary-rgb: 100, 116, 139;
+    --accent-rgb: 59, 130, 246;
+    --success-rgb: 34, 197, 94;
+    --warning-rgb: 251, 191, 36;
+    --error-rgb: 239, 68, 68;
+
+    /* Glassmorphism */
+    --glass-background: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+    /* Modern shadows */
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-hard: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 20px rgba(var(--primary-rgb), 0.3);
   }
 
   .dark {
-    /* Dark mode is not specified in the new design.
-       Using light theme colors as a fallback. */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 222 83% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 207 92% 94%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 225 16% 91%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 207 92% 94%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 225 16% 91%;
-    --input: 225 16% 91%;
-    --ring: 222 83% 53%;
+    /* Dark mode political theme */
+    --background: 15 23 42;
+    --foreground: 248 250 252;
+
+    --card: 30 41 59;
+    --card-foreground: 248 250 252;
+
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
+
+    /* Primary: Bright Blue for dark mode */
+    --primary: 59 130 246;
+    --primary-foreground: 15 23 42;
+
+    /* Secondary: Dark Gray */
+    --secondary: 51 65 85;
+    --secondary-foreground: 248 250 252;
+
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
+
+    /* Accent: Bright Blue */
+    --accent: 96 165 250;
+    --accent-foreground: 15 23 42;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
+
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 59 130 246;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Dark mode glassmorphism */
+    --glass-background: rgba(0, 0, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 }
 
@@ -113,6 +189,10 @@ All colors MUST be HSL.
     background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--muted)) 100%);
   }
   
+  .gradient-mesh {
+    /* Disabled problematic gradient - was causing yellow background overlay */
+    background: transparent;
+  }
   
   /* Custom scrollbar */
   .scrollbar-thin {
