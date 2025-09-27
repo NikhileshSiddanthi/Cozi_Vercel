@@ -6,12 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { SuggestGroupModal } from '@/components/SuggestGroupModal';
-import { GroupCard } from '@/components/GroupCard';
-import { useToast } from '@/hooks/use-toast';
 import { 
   ArrowLeft,
   Users, 
   MessageCircle,
+  TrendingUp,
   Vote
 } from 'lucide-react';
 
@@ -37,7 +36,6 @@ const CategoryPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { toast } = useToast();
   
   const [category, setCategory] = useState<Category | null>(null);
   const [groups, setGroups] = useState<Group[]>([]);
@@ -64,6 +62,7 @@ const CategoryPage = () => {
         console.error('Error fetching category:', error);
         return;
       }
+
       setCategory(data);
     } catch (error) {
       console.error('Error:', error);
@@ -72,6 +71,7 @@ const CategoryPage = () => {
 
   const fetchGroups = async () => {
     try {
+      console.log('Fetching groups for category:', categoryId);
       const { data, error } = await supabase
         .from('groups')
         .select('*')
@@ -83,6 +83,8 @@ const CategoryPage = () => {
         console.error('Error fetching groups:', error);
         return;
       }
+
+      console.log('Groups fetched:', data?.length || 0, 'groups');
       setGroups(data || []);
     } catch (error) {
       console.error('Error:', error);
@@ -101,6 +103,7 @@ const CategoryPage = () => {
         console.error('Error fetching categories:', error);
         return;
       }
+
       setCategories(data || []);
     } catch (error) {
       console.error('Error:', error);
@@ -109,51 +112,6 @@ const CategoryPage = () => {
 
   const handleGroupClick = (groupId: string) => {
     navigate(`/group/${groupId}`);
-  };
-
-  const handleJoinGroup = async (groupId: string) => {
-    if (!user) {
-      toast({
-        title: "Authentication Required",
-        description: "You need to be logged in to join a group.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from("group_members")
-        .insert({
-          group_id: groupId,
-          user_id: user.id,
-          role: "member",
-          status: "approved"
-        });
-
-      if (error) throw error;
-
-      // Optimistically update the UI
-      setGroups(prevGroups =>
-        prevGroups.map(group =>
-          group.id === groupId
-            ? { ...group, member_count: group.member_count + 1 }
-            : group
-        )
-      );
-
-      toast({
-        title: "Joined Successfully!",
-        description: "You are now a member of this group.",
-      });
-
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to join group. You may already be a member.",
-        variant: "destructive",
-      });
-    }
   };
 
   if (loading) {
@@ -183,6 +141,7 @@ const CategoryPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-20">
+        {/* Back Button */}
         <Button 
           variant="ghost" 
           onClick={() => navigate('/')}
@@ -193,7 +152,9 @@ const CategoryPage = () => {
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content */}
           <div className="lg:col-span-3">
+            {/* Category Header */}
             <div className="mb-8">
               <h2 className="text-3xl font-bold mb-2">{category.name}</h2>
               <p className="text-xl text-muted-foreground">
@@ -206,6 +167,7 @@ const CategoryPage = () => {
               </div>
             </div>
 
+            {/* Groups Grid */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-semibold">Groups in this category</h3>
@@ -232,20 +194,42 @@ const CategoryPage = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {groups.map((group) => (
-                    <GroupCard
+                    <Card
                       key={group.id}
-                      group={group}
-                      onClick={handleGroupClick}
-                      onJoin={handleJoinGroup}
-                    />
+                      className="hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => handleGroupClick(group.id)}
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-lg">{group.name}</CardTitle>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Users className="h-4 w-4" />
+                            {group.member_count} members
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <TrendingUp className="h-4 w-4" />
+                            {group.type.replace("-", " ")}
+                          </div>
+                        </div>
+                      </CardHeader>
+                      {group.description && (
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">
+                            {group.description}
+                          </p>
+                        </CardContent>
+                      )}
+                    </Card>
                   ))}
                 </div>
               )}
             </div>
           </div>
 
+          {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="space-y-6 sticky top-24">
+              {/* Quick Actions */}
               <Card>
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
@@ -262,6 +246,7 @@ const CategoryPage = () => {
                 </CardContent>
               </Card>
 
+              {/* Category Stats */}
               <Card>
                 <CardHeader>
                   <CardTitle>Category Stats</CardTitle>

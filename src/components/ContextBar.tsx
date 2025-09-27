@@ -35,13 +35,13 @@ export const ContextBar = () => {
             breadcrumbs: [{ label: 'Home', path: '/' }, { label: data?.name || 'Category' }]
           });
         } else if (location.pathname.startsWith('/group/') && groupId) {
-          const { data } = await supabase.from('groups').select('name, categories(name)').eq('id', groupId).single();
+          const { data } = await supabase.from('groups').select('name, categories(id, name)').eq('id', groupId).single();
           setContextData({
             title: `Group: ${data?.name || 'Unknown'}`,
             icon: <Users className="h-4 w-4" />,
             breadcrumbs: [
               { label: 'Home', path: '/' },
-              { label: data?.categories?.name || 'Category', path: `/category/${params.categoryId}` },
+              { label: data?.categories?.name || 'Category', path: `/category/${data?.categories?.id}` },
               { label: data?.name || 'Group' }
             ]
           });

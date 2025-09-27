@@ -18,6 +18,8 @@ import PostDetailPage from "./pages/PostDetailPage";
 import TrendingTopics from "./pages/TrendingTopics";
 import TestPage from "./pages/TestPage";
 import NotFound from "./pages/NotFound";
+import SimpleTestPage from "./pages/SimpleTestPage";
+import HeaderTestPage from "./pages/HeaderTestPage";
 
 const queryClient = new QueryClient();
 
@@ -29,9 +31,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <div className="min-h-screen bg-background">
-            <Header />
-            <ContextBar />
-            <main id="main-content" className="pt-24">
+            <main id="main-content" className="pt-4">
               <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route 
@@ -98,6 +98,8 @@ const App = () => (
               </ProtectedRoute>
             } 
           />
+          <Route path="/simple-test" element={<SimpleTestPage />} />
+          <Route path="/header-test" element={<HeaderTestPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

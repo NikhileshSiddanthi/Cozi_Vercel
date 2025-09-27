@@ -13,19 +13,17 @@ def run(playwright):
 
     page.on("console", handle_console)
 
-    # Navigate to the auth page and log in
-    page.goto("http://127.0.0.1:8080/auth")
-    page.get_by_label("Email").fill("testuser@cozi.com")
-    page.get_by_label("Password").fill("password123")
-    page.get_by_role("button", name="Sign In", exact=True).click()
+    # Navigate to the auth page
+    page.goto("http://127.0.0.1:8080/auth", wait_until="networkidle")
 
-    # Wait for the dashboard to load
-    expect(page.get_by_role("heading", name="Welcome to ConnectSphere")).to_be_visible()
+    # Wait for the page to be in a somewhat stable state
+    page.wait_for_timeout(2000)
 
-    # Wait for a moment to let data fetching attempts happen
-    page.wait_for_timeout(3000)
+    # Take a screenshot for visual inspection
+    page.screenshot(path="jules-scratch/verification/debug_auth_page.png")
 
-    page.screenshot(path="jules-scratch/verification/debug_dashboard.png")
+    # Get the full HTML of the page
+    html_content = page.content()
 
     browser.close()
 
@@ -35,6 +33,9 @@ def run(playwright):
             print(log)
     else:
         print("No console errors or warnings found.")
+
+    print("\n--- PAGE HTML ---")
+    print(html_content)
 
 with sync_playwright() as playwright:
     run(playwright)
