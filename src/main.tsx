@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Toaster } from './components/ui/sonner'
+import { ThemeProvider } from './components/ThemeProvider'
 import App from './App.tsx'
 import './index.css'
 
@@ -35,10 +36,12 @@ createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <AuthProvider>
-            <App />
-            <Toaster />
-          </AuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <AuthProvider>
+              <App />
+              <Toaster />
+            </AuthProvider>
+          </ThemeProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </ErrorBoundary>
